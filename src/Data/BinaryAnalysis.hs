@@ -22,3 +22,5 @@ data Symbol
   deriving (Eq, Ord, Show, Generic)
 
 instance Hashable Symbol
+
+type BitWidth = Word64
