@@ -6,6 +6,13 @@ import Data.Word
 import GHC.Generics
 import qualified Numeric
 
+type BitWidth = Word64
+
+newtype AddressWidth = AddressWidth BitWidth
+  deriving (Eq, Ord, Generic)
+
+instance Hashable AddressWidth
+
 newtype Address = Address Word64
   deriving (Eq, Ord, Num, Real, Enum, Integral, Generic)
 
@@ -22,5 +29,3 @@ data Symbol
   deriving (Eq, Ord, Show, Generic)
 
 instance Hashable Symbol
-
-type BitWidth = Word64
