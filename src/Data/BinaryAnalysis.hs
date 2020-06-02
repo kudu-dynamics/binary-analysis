@@ -6,18 +6,32 @@ import Data.Word
 import GHC.Generics
 import qualified Numeric
 
-type BitWidth = Word64
+newtype Bytes = Bytes Word64
+  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
 
-newtype AddressWidth = AddressWidth BitWidth
-  deriving (Eq, Ord, Generic)
+instance Hashable Bytes
+
+newtype Bits = Bits Word64
+  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+
+instance Hashable Bits
+
+toBits :: Bytes -> Bits
+toBits (Bytes n) = Bits (8*n)
+
+toBytes :: Bits -> Bytes
+toBytes (Bits n) = Bytes (n `div` 8)
+
+newtype AddressWidth = AddressWidth Bits
+  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
 
 instance Hashable AddressWidth
 
-newtype Address = Address Word64
-  deriving (Eq, Ord, Num, Real, Enum, Integral, Generic)
+newtype Address = Address Bytes
+  deriving (Eq, Ord, Generic, Enum, Real, Integral, Num)
 
 instance Show Address where
-  show (Address x) = showString "Address 0x" . Numeric.showHex x $ ""
+  show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
 
 instance Hashable Address
 
