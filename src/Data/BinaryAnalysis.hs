@@ -1,6 +1,7 @@
 module Data.BinaryAnalysis where
 
 import Data.Hashable
+import Data.Int (Int64)
 import Data.Text
 import Data.Word
 import GHC.Generics
@@ -21,6 +22,23 @@ toBits (Bytes n) = Bits (8*n)
 
 toBytes :: Bits -> Bytes
 toBytes (Bits n) = Bytes (n `div` 8)
+
+newtype ByteOffset = ByteOffset Int64
+  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+
+instance Hashable ByteOffset
+
+newtype BitOffset = BitOffset Int64
+  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+
+instance Hashable BitOffset
+
+toBitOffset :: ByteOffset -> BitOffset
+toBitOffset (ByteOffset n) = BitOffset (8*n)
+
+toByteOffset :: BitOffset -> ByteOffset
+toByteOffset (BitOffset n) = ByteOffset (n `div` 8)
+
 
 newtype AddressWidth = AddressWidth Bits
   deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
