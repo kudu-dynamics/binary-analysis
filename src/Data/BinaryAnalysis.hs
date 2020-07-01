@@ -22,7 +22,7 @@ toBits (Bytes n) = Bits (8*n)
 toBytes :: Bits -> Bytes
 toBytes (Bits n) = Bytes (n `div` 8)
 
-newtype AddressWidth = AddressWidth Bits
+newtype AddressWidth = AddressWidth Bytes
   deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
 
 instance Hashable AddressWidth
