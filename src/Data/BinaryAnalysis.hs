@@ -40,7 +40,7 @@ toByteOffset :: BitOffset -> ByteOffset
 toByteOffset (BitOffset n) = ByteOffset (n `div` 8)
 
 
-newtype AddressWidth = AddressWidth Bytes
+newtype AddressWidth = AddressWidth Bits
   deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
 
 instance Hashable AddressWidth
