@@ -1,6 +1,5 @@
 name:                binary-analysis
 version:             0.1.0.0
-github:              ""
 license:             LicenseRef-Proprietary
 author:              "drone"
 maintainer:          "drone@kududyn.com"
@@ -21,7 +20,10 @@ description:         Common data types and utilities for binary analysis
 
 default-extensions:
 - DeriveGeneric
+- DerivingStrategies
+- FlexibleInstances
 - GeneralizedNewtypeDeriving
+- MultiParamTypeClasses
 - OverloadedStrings
 - ScopedTypeVariables
 - StandaloneDeriving
@@ -34,6 +36,7 @@ dependencies:
 - lens
 - text
 - unordered-containers
+- smallcheck
 
 library:
   ghc-options:
