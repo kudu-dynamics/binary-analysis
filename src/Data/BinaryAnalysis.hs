@@ -9,7 +9,8 @@ import qualified Numeric
 import Test.SmallCheck.Series (Serial, series, newtypeCons, decDepth, (<~>))
 
 newtype Bytes = Bytes Word64
-  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+  deriving (Eq, Ord, Read, Show, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
 
 instance Monad m => Serial m Bytes where
   series = newtypeCons Bytes
@@ -17,7 +18,8 @@ instance Monad m => Serial m Bytes where
 instance Hashable Bytes
 
 newtype Bits = Bits Word64
-  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+  deriving (Eq, Ord, Read, Show, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
 
 instance Monad m => Serial m Bits where
   series = newtypeCons Bits
@@ -31,20 +33,20 @@ toBytes :: Bits -> Bytes
 toBytes (Bits n) = Bytes (n `div` 8)
 
 newtype ByteOffset = ByteOffset Int64
-  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+  deriving (Eq, Ord, Read, Show, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
+  deriving anyclass Hashable
 
 instance Monad m => Serial m ByteOffset where
   series = newtypeCons ByteOffset
 
-instance Hashable ByteOffset
-
 newtype BitOffset = BitOffset Int64
-  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+  deriving (Eq, Ord, Read, Show, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
+  deriving anyclass Hashable
 
 instance Monad m => Serial m BitOffset where
   series = newtypeCons BitOffset
-
-instance Hashable BitOffset
 
 toBitOffset :: ByteOffset -> BitOffset
 toBitOffset (ByteOffset n) = BitOffset (8*n)
@@ -52,17 +54,18 @@ toBitOffset (ByteOffset n) = BitOffset (8*n)
 toByteOffset :: BitOffset -> ByteOffset
 toByteOffset (BitOffset n) = ByteOffset (n `div` 8)
 
-
-newtype AddressWidth = AddressWidth Bits
-  deriving (Eq, Ord, Read, Show, Generic, Enum, Real, Integral, Num)
+newtype AddressWidth = AddressWidth {bits :: Bits}
+  deriving (Eq, Ord, Read, Show, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
+  deriving anyclass Hashable
 
 instance Monad m => Serial m AddressWidth where
   series = newtypeCons AddressWidth
 
-instance Hashable AddressWidth
-
 newtype Address = Address Bytes
-  deriving (Eq, Ord, Generic, Enum, Real, Integral, Num)
+  deriving (Eq, Ord, Generic, Enum)
+  deriving newtype (Real, Integral, Num)
+  deriving anyclass Hashable
 
 instance Monad m => Serial m Address where
   series = newtypeCons Address
@@ -70,18 +73,15 @@ instance Monad m => Serial m Address where
 instance Show Address where
   show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
 
-instance Hashable Address
-
 data Symbol
   = Symbol
       { _symbolName :: Text,
         _symbolRawName :: Text
       }
   deriving (Eq, Ord, Show, Generic)
+  deriving anyclass Hashable
 
 instance Monad m => Serial m Symbol where
   series = decDepth $ Symbol
     <$> newtypeCons pack
     <~> newtypeCons pack
-
-instance Hashable Symbol
