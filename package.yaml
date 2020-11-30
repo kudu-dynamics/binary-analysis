@@ -19,7 +19,12 @@ extra-source-files:
 description:         Common data types and utilities for binary analysis
 
 default-extensions:
+- DeriveAnyClass
+- DeriveDataTypeable
+- DeriveFoldable
+- DeriveFunctor
 - DeriveGeneric
+- DeriveTraversable
 - DerivingStrategies
 - FlexibleInstances
 - GeneralizedNewtypeDeriving
