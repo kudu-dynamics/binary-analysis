@@ -1,5 +1,6 @@
 module Data.BinaryAnalysis where
 
+import Data.Aeson (FromJSON, ToJSON)
 import Data.Hashable
 import Data.Int (Int64)
 import Data.Text
@@ -11,20 +12,18 @@ import Test.SmallCheck.Series (Serial, series, newtypeCons, decDepth, (<~>))
 newtype Bytes = Bytes Word64
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m Bytes where
   series = newtypeCons Bytes
 
-instance Hashable Bytes
-
 newtype Bits = Bits Word64
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m Bits where
   series = newtypeCons Bits
-
-instance Hashable Bits
 
 toBits :: Bytes -> Bits
 toBits (Bytes n) = Bits (8*n)
@@ -35,7 +34,7 @@ toBytes (Bits n) = Bytes (n `div` 8)
 newtype ByteOffset = ByteOffset Int64
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
-  deriving anyclass Hashable
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m ByteOffset where
   series = newtypeCons ByteOffset
@@ -43,7 +42,7 @@ instance Monad m => Serial m ByteOffset where
 newtype BitOffset = BitOffset Int64
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
-  deriving anyclass Hashable
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m BitOffset where
   series = newtypeCons BitOffset
@@ -57,7 +56,7 @@ toByteOffset (BitOffset n) = ByteOffset (n `div` 8)
 newtype AddressWidth = AddressWidth {bits :: Bits}
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
-  deriving anyclass Hashable
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m AddressWidth where
   series = newtypeCons AddressWidth
@@ -65,7 +64,7 @@ instance Monad m => Serial m AddressWidth where
 newtype Address = Address Bytes
   deriving (Eq, Ord, Generic, Enum)
   deriving newtype (Real, Integral, Num)
-  deriving anyclass Hashable
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m Address where
   series = newtypeCons Address
@@ -79,7 +78,7 @@ data Symbol
         _symbolRawName :: Text
       }
   deriving (Eq, Ord, Show, Generic)
-  deriving anyclass Hashable
+  deriving anyclass (Hashable, FromJSON, ToJSON)
 
 instance Monad m => Serial m Symbol where
   series = decDepth $ Symbol
