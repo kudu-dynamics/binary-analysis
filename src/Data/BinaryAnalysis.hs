@@ -1,6 +1,6 @@
 module Data.BinaryAnalysis where
 
-import Data.Aeson (FromJSON, ToJSON)
+import Data.Aeson (FromJSON, ToJSON, ToJSONKey, FromJSONKey)
 import Data.Hashable
 import Data.Int (Int64)
 import Data.Text
@@ -32,7 +32,7 @@ newtype ByteOffset = ByteOffset Int64
 newtype BitOffset = BitOffset Int64
   deriving (Eq, Ord, Read, Show, Generic, Enum)
   deriving newtype (Real, Integral, Num)
-  deriving anyclass (Hashable, FromJSON, ToJSON)
+  deriving anyclass (Hashable, FromJSON, ToJSON, ToJSONKey, FromJSONKey)
 
 toBitOffset :: ByteOffset -> BitOffset
 toBitOffset (ByteOffset n) = BitOffset (8*n)
