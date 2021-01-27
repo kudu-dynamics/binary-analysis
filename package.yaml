@@ -42,7 +42,6 @@ dependencies:
 - lens
 - text
 - unordered-containers
-- smallcheck
 
 library:
   ghc-options:
