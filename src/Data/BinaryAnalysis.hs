@@ -46,7 +46,7 @@ newtype AddressWidth = AddressWidth {bits :: Bits}
   deriving anyclass (Hashable, FromJSON, ToJSON)
 
 newtype Address = Address Bytes
-  deriving (Eq, Ord, Generic, Enum)
+  deriving (Eq, Ord, Read, Generic, Enum)
   deriving newtype (Real, Integral, Num)
   deriving anyclass (Hashable, FromJSON, ToJSON)
 
