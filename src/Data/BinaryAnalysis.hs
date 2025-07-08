@@ -83,9 +83,8 @@ data AddressSpace = AddressSpace
 data Address = Address
   { space :: AddressSpace
   , offset :: Int64 -- ^ multiply by addressableUnitSize to get byte offset
-  } -- deriving (Eq, Ord, Show, Generic, Hashable)
+  }
   deriving (Eq, Ord, Read, Generic, Hashable)
-  -- deriving newtype (Real, Integral, Num)
   deriving anyclass (FromJSON, ToJSON)
 
 addrToInt :: Address -> Word64
@@ -93,7 +92,8 @@ addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUn
 
 -- TODO: add addressSpace to this string
 instance Show Address where
-  show addr = showString "Address 0x" . Numeric.showHex . addrToInt addr $ ""
+  show addr = showString "Address 0x" . Numeric.showHex (addrToInt addr) $ ""
+  -- show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
 
 data Symbol
   = Symbol
