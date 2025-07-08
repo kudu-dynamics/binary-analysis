@@ -38,6 +38,7 @@ dependencies:
 - base >= 4.7 && < 5
 - containers
 - generic-deriving
+- generic-lens
 - hashable
 - lens
 - text

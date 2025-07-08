@@ -3,6 +3,7 @@
 
 module Data.BinaryAnalysis where
 
+import Control.Lens ((^.))
 import Data.Aeson (FromJSON, ToJSON, ToJSONKey, FromJSONKey)
 import Data.Hashable
 import Data.Int (Int32, Int64)
@@ -88,8 +89,7 @@ data Address = Address
   deriving anyclass (FromJSON, ToJSON)
 
 addrToInt :: Address -> Word64
-addrToInt addr = fromIntegral
-  $ addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
+addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
 
 -- TODO: add addressSpace to this string
 instance Show Address where
