@@ -53,6 +53,28 @@ newtype Address = Address Bytes
 instance Show Address where
   show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
 
+newtype AddressSpaceId = AddressSpaceId Int32
+  deriving (Generic)
+  deriving newtype (Eq, Ord, Read, Show, Num, Hashable)
+
+data AddressSpaceName
+  = EXTERNAL
+  | HASH
+  | Const
+  | Ram
+  | Register
+  | Stack
+  | Unique
+  | Other Text
+  deriving (Eq, Ord, Read, Show, Generic, Hashable)
+
+data AddressSpace = AddressSpace
+  { id :: AddressSpaceId
+  , ptrSize :: Bytes
+  , addressableUnitSize :: Bytes
+  , name :: AddressSpaceName
+  } deriving (Eq, Ord, Show, Generic, Hashable)
+
 data Symbol
   = Symbol
       { _symbolName :: Text,
