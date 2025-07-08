@@ -68,7 +68,9 @@ data AddressSpace = AddressSpace
   , ptrSize :: Bytes
   , addressableUnitSize :: Bytes
   , name :: AddressSpaceName
-  } deriving (Eq, Ord, Show, Generic, Hashable)
+  }
+  deriving (Eq, Ord, Read, Show, Generic, Hashable)
+  deriving anyclass (FromJSON, ToJSON)
 
 -- newtype Address = Address Bytes
 --   deriving (Eq, Ord, Read, Generic, Enum)
@@ -79,9 +81,9 @@ data Address = Address
   { space :: AddressSpace
   , offset :: Int64 -- ^ multiply by addressableUnitSize to get byte offset
   } -- deriving (Eq, Ord, Show, Generic, Hashable)
-  deriving (Eq, Ord, Read, Show, Generic, Hashable Enum)
-  deriving newtype (Real, Integral, Num)
-  deriving anyclass (Hashable, FromJSON, ToJSON)
+  deriving (Eq, Ord, Read, Show, Generic, Hashable, Enum)
+  -- deriving newtype (Real, Integral, Num)
+  deriving anyclass (FromJSON, ToJSON)
 
 addrToInt :: Address -> Word64
 addrToInt addr = fromIntegral
