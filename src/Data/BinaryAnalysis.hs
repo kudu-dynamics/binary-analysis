@@ -83,7 +83,7 @@ data Address = Address
   { space :: AddressSpace
   , offset :: Int64 -- ^ multiply by addressableUnitSize to get byte offset
   } -- deriving (Eq, Ord, Show, Generic, Hashable)
-  deriving (Eq, Ord, Read, Show, Generic, Hashable)
+  deriving (Eq, Ord, Read, Generic, Hashable)
   -- deriving newtype (Real, Integral, Num)
   deriving anyclass (FromJSON, ToJSON)
 
