@@ -1,5 +1,6 @@
-{-# LANGUAGE OverloadedLabels #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Data.BinaryAnalysis where
 
