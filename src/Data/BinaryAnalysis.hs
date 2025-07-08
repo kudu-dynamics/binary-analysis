@@ -88,9 +88,8 @@ data Address = Address
   deriving (Eq, Ord, Read, Generic, Hashable)
   deriving anyclass (FromJSON, ToJSON)
 
-addrToInt :: Address -> Word64
-addrToInt addr = fromIntegral $
-  addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
+addrToInt :: Address -> Int64
+addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
 
 -- TODO: add addressSpace to this string
 instance Show Address where
