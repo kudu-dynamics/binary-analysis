@@ -51,6 +51,7 @@ newtype AddressWidth = AddressWidth {bits :: Bits}
 newtype AddressSpaceId = AddressSpaceId Int32
   deriving (Generic)
   deriving newtype (Eq, Ord, Read, Show, Num, Hashable)
+  deriving anyclass (FromJSON, ToJSON)
 
 data AddressSpaceName
   = EXTERNAL
@@ -62,6 +63,7 @@ data AddressSpaceName
   | Unique
   | Other Text
   deriving (Eq, Ord, Read, Show, Generic, Hashable)
+  deriving anyclass (FromJSON, ToJSON)
 
 data AddressSpace = AddressSpace
   { id :: AddressSpaceId
@@ -81,7 +83,7 @@ data Address = Address
   { space :: AddressSpace
   , offset :: Int64 -- ^ multiply by addressableUnitSize to get byte offset
   } -- deriving (Eq, Ord, Show, Generic, Hashable)
-  deriving (Eq, Ord, Read, Show, Generic, Hashable, Enum)
+  deriving (Eq, Ord, Read, Show, Generic, Hashable)
   -- deriving newtype (Real, Integral, Num)
   deriving anyclass (FromJSON, ToJSON)
 
