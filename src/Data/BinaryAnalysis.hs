@@ -1,3 +1,6 @@
+{-# LANGUAGE OverloadedLabels #-}
+{-# LANGUAGE DataKinds #-}
+
 module Data.BinaryAnalysis where
 
 import Data.Aeson (FromJSON, ToJSON, ToJSONKey, FromJSONKey)
@@ -45,14 +48,6 @@ newtype AddressWidth = AddressWidth {bits :: Bits}
   deriving newtype (Real, Integral, Num)
   deriving anyclass (Hashable, FromJSON, ToJSON)
 
-newtype Address = Address Bytes
-  deriving (Eq, Ord, Read, Generic, Enum)
-  deriving newtype (Real, Integral, Num)
-  deriving anyclass (Hashable, FromJSON, ToJSON)
-
-instance Show Address where
-  show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
-
 newtype AddressSpaceId = AddressSpaceId Int32
   deriving (Generic)
   deriving newtype (Eq, Ord, Read, Show, Num, Hashable)
@@ -74,6 +69,27 @@ data AddressSpace = AddressSpace
   , addressableUnitSize :: Bytes
   , name :: AddressSpaceName
   } deriving (Eq, Ord, Show, Generic, Hashable)
+
+-- newtype Address = Address Bytes
+--   deriving (Eq, Ord, Read, Generic, Enum)
+--   deriving newtype (Real, Integral, Num)
+--   deriving anyclass (Hashable, FromJSON, ToJSON)
+
+data Address = Address
+  { space :: AddressSpace
+  , offset :: Int64 -- ^ multiply by addressableUnitSize to get byte offset
+  } -- deriving (Eq, Ord, Show, Generic, Hashable)
+  deriving (Eq, Ord, Read, Show, Generic, Hashable Enum)
+  deriving newtype (Real, Integral, Num)
+  deriving anyclass (Hashable, FromJSON, ToJSON)
+
+addrToInt :: Address -> Word64
+addrToInt addr = fromIntegral
+  $ addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
+
+-- TODO: add addressSpace to this string
+instance Show Address where
+  show addr = showString "Address 0x" . Numeric.showHex . addrToInt addr $ ""
 
 data Symbol
   = Symbol
