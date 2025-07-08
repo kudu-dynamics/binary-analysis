@@ -33,6 +33,7 @@ library
   hs-source-dirs:
       src
   default-extensions:
+      DataKinds
       DeriveAnyClass
       DeriveDataTypeable
       DeriveFoldable
@@ -43,6 +44,7 @@ library
       FlexibleInstances
       GeneralizedNewtypeDeriving
       MultiParamTypeClasses
+      OverloadedLabels
       OverloadedStrings
       ScopedTypeVariables
       StandaloneDeriving
@@ -69,6 +71,7 @@ test-suite binary-analysis-test
   hs-source-dirs:
       test
   default-extensions:
+      DataKinds
       DeriveAnyClass
       DeriveDataTypeable
       DeriveFoldable
@@ -79,6 +82,7 @@ test-suite binary-analysis-test
       FlexibleInstances
       GeneralizedNewtypeDeriving
       MultiParamTypeClasses
+      OverloadedLabels
       OverloadedStrings
       ScopedTypeVariables
       StandaloneDeriving
