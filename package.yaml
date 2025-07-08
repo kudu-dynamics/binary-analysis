@@ -5,7 +5,7 @@ author:
   - Matt (drone) Revelle <drone@kududyn.com>
   - Matt Parker <mp@kududyn.com>
   - Kevin Orr <kevino@kududyn.com>
-maintainer:          
+maintainer:
   - Matt (drone) Revelle <drone@kududyn.com>
   - Matt Parker <mp@kududyn.com>
   - Kevin Orr <kevino@kududyn.com>
@@ -19,6 +19,7 @@ extra-source-files:
 - ChangeLog.md
 
 default-extensions:
+- DataKinds
 - DeriveAnyClass
 - DeriveDataTypeable
 - DeriveFoldable
@@ -29,6 +30,7 @@ default-extensions:
 - FlexibleInstances
 - GeneralizedNewtypeDeriving
 - MultiParamTypeClasses
+- OverloadedLabels
 - OverloadedStrings
 - ScopedTypeVariables
 - StandaloneDeriving
