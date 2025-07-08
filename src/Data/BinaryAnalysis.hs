@@ -3,8 +3,8 @@ module Data.BinaryAnalysis where
 import Control.Lens ((^.))
 import Data.Aeson (FromJSON, ToJSON, ToJSONKey, FromJSONKey)
 
-import Data.Generics.Labels
-import Data.Generics.Product.Fields (HasField(field), HasField'(field'))
+-- import Data.Generics.Labels
+-- import Data.Generics.Product.Fields (HasField(field), HasField'(field'))
 
 import Data.Hashable
 import Data.Int (Int32, Int64)
