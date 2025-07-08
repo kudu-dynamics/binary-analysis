@@ -2,7 +2,7 @@ module Data.BinaryAnalysis where
 
 import Data.Aeson (FromJSON, ToJSON, ToJSONKey, FromJSONKey)
 import Data.Hashable
-import Data.Int (Int64)
+import Data.Int (Int32, Int64)
 import Data.Text
 import Data.Word
 import GHC.Generics
