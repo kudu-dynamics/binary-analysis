@@ -91,6 +91,17 @@ data Address = Address
 addrToInt :: Address -> Int64
 addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUnitSize)
 
+intToAddr :: Int64 -> Address
+intToAddr addr = Address
+  { space = AddressSpace
+    { id = AddressSpaceId 0
+    , ptrSize = Bytes 8
+    , addressableUnitSize = Bytes 1
+    , name = Ram
+    }
+  , offset = addr
+  }
+
 -- TODO: add addressSpace to this string
 instance Show Address where
   show addr = showString "Address 0x" . Numeric.showHex (addrToInt addr) $ ""
