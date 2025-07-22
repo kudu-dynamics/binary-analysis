@@ -68,7 +68,7 @@ data AddressSpaceName
   deriving anyclass (FromJSON, ToJSON)
 
 data AddressSpace = AddressSpace
-  { id :: AddressSpaceId
+  { spaceId :: AddressSpaceId
   , ptrSize :: Bytes
   , addressableUnitSize :: Bytes
   , name :: AddressSpaceName
@@ -94,7 +94,7 @@ addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUn
 intToAddr :: Int64 -> Address
 intToAddr addr = Address
   { space = AddressSpace
-    { id = AddressSpaceId 0
+    { spaceId = AddressSpaceId 0
     , ptrSize = Bytes 8
     , addressableUnitSize = Bytes 1
     , name = Ram
