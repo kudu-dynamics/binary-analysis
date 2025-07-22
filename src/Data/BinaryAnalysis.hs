@@ -107,6 +107,9 @@ instance Show Address where
   show addr = showString "Address 0x" . Numeric.showHex (addrToInt addr) $ ""
   -- show (Address (Bytes x)) = showString "Address 0x" . Numeric.showHex x $ ""
 
+instance Eq Address where
+  x == y = (addrToInt x) == (addrToInt y)
+
 data Symbol
   = Symbol
       { _symbolName :: Text,
