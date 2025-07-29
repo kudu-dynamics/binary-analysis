@@ -88,8 +88,7 @@ addrToInt addr = addr ^. #offset * fromIntegral (addr ^. #space . #addressableUn
 intToAddr :: Int64 -> Address
 intToAddr addr = Address
   { space = AddressSpace
-    { spaceId = AddressSpaceId 0
-    , ptrSize = Bytes 8
+    { ptrSize = Bytes 8
     , addressableUnitSize = Bytes 1
     , name = Ram
     }
